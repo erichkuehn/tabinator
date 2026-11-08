@@ -2,12 +2,22 @@
 
 A small Brave/Chrome extension that lets you rename tabs.
 
-## Install (Brave)
+## Install (Brave or Chrome)
 
-1. Open `brave://extensions`.
-2. Turn on **Developer mode** (top right).
-3. Click **Load unpacked** and choose this folder.
-4. Optional: pin the extension from the puzzle-piece menu.
+1. Download `tabinator-<version>.zip` from the
+   [latest release](https://github.com/erichkuehn/tabinator/releases/latest)
+   and unzip it. Keep the `tabinator` folder somewhere permanent; the browser
+   loads the extension from it.
+2. Open `brave://extensions` (or `chrome://extensions`).
+3. Turn on **Developer mode** (top right).
+4. Click **Load unpacked** and choose the `tabinator` folder.
+5. Optional: pin the extension from the puzzle-piece menu.
+
+To update, download the new zip, replace the folder's contents, and click the
+reload icon on Tabinator in the extensions page. Your tab names are kept.
+
+Brave may show a warning at startup about developer-mode extensions; that's
+expected for extensions installed this way.
 
 ## Use
 
