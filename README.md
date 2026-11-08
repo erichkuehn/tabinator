@@ -39,3 +39,7 @@ A small Brave/Chrome extension that lets you rename tabs.
 - `background.js`: stores each tab's name and sends it to the page
 - `content.js`: sets `document.title` and re-applies it when the site changes it
 - `popup.html` / `popup.js`: the rename box
+
+## License
+
+MIT. See [LICENSE](LICENSE).
