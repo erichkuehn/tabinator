@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font: 13px system-ui, sans-serif; margin: 0; padding: 12px; width: 300px; }
+    label, .heading { display: block; font-weight: 600; margin-bottom: 6px; }
+    input { box-sizing: border-box; width: 100%; padding: 6px 8px; font: inherit; }
+    .row { display: flex; gap: 8px; margin-top: 10px; }
+    .row button { flex: 1; padding: 6px; font: inherit; cursor: pointer; }
+    #status { color: #666; margin-top: 8px; }
+    #error { color: #b00020; margin-top: 8px; }
+    .heading { margin-top: 14px; }
+    #swatches { display: flex; flex-wrap: wrap; gap: 6px; }
+    .swatch {
+      width: 24px; height: 24px; border-radius: 50%; border: 2px solid transparent;
+      padding: 0; cursor: pointer; outline-offset: 2px;
+    }
+    .swatch[aria-pressed="true"] { outline: 2px solid currentColor; }
+    .swatch.none {
+      background: linear-gradient(135deg, transparent 45%, #b00020 45%, #b00020 55%, transparent 55%), #fff;
+      border-color: #999;
+    }
+    @media (prefers-color-scheme: dark) {
+      body { background: #202124; color: #e8eaed; }
+      #status { color: #9aa0a6; }
+      #error { color: #f28b82; }
+    }
+  </style>
+</head>
+<body>
+  <form id="form">
+    <label for="name">Tab name</label>
+    <input id="name" autocomplete="off" placeholder="Enter a custom name">
+    <div class="row">
+      <button type="submit">Save</button>
+      <button type="button" id="reset">Reset</button>
+    </div>
+  </form>
+  <div id="status"></div>
+  <div class="heading">Tab color</div>
+  <div id="swatches"></div>
+  <div id="error" hidden></div>
+  <script src="popup.js"></script>
+</body>
+</html>
