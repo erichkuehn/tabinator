@@ -59,6 +59,7 @@ Tabinator turns off.
 - `background.js`: stores each tab's name and sends it to the page
 - `content.js`: sets `document.title` and re-applies it when the site changes it
 - `popup.html` / `popup.js`: the rename box
+- `icons/`: toolbar and store icons, drawn by `scripts/make-icons.mjs`
 
 ## License
 

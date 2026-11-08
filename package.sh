@@ -10,5 +10,5 @@ out="dist/tabinator-$version.zip"
 mkdir -p dist
 rm -f "$out"
 git archive --format=zip --prefix=tabinator/ -o "$out" HEAD \
-  manifest.json background.js content.js popup.html popup.js LICENSE README.md
+  manifest.json background.js content.js popup.html popup.js icons LICENSE README.md
 echo "$out"
