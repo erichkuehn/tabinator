@@ -6,7 +6,10 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const SIZES = [16, 32, 48, 128];
+// Transparent padding around the artwork, in output pixels. Chrome wants the
+// 128px store icon drawn in the middle 96x96; smaller sizes fill the canvas
+// so their edges stay crisp.
+const SIZES = { 16: 0, 32: 0, 48: 0, 128: 16 };
 const INDIGO = [79, 70, 229];
 const WHITE = [255, 255, 255];
 const PINK = [236, 72, 153];
@@ -27,7 +30,7 @@ function roundRect(x0, y0, x1, y1, r) {
 
 // Layers, painted in order.
 const LAYERS = [
-  { color: INDIGO, shape: roundRect(4, 4, 124, 124, 28) },
+  { color: INDIGO, shape: roundRect(0, 0, 128, 128, 28) },
   // A browser tab: rounded top, sitting on a baseline.
   { color: WHITE, shape: roundRect(26, 34, 90, 100, [14, 14, 0, 0]) },
   { color: WHITE, shape: roundRect(16, 92, 112, 102, 3) },
@@ -36,8 +39,9 @@ const LAYERS = [
   { color: PINK, shape: roundRect(72, 50, 79, 80, 3) },
 ];
 
-function render(size) {
+function render(size, pad) {
   const SS = 4;
+  const art = size - 2 * pad;
   const px = Buffer.alloc(size * size * 4);
   for (let py = 0; py < size; py++) {
     for (let pxi = 0; pxi < size; pxi++) {
@@ -46,8 +50,8 @@ function render(size) {
         let hits = 0;
         for (let sy = 0; sy < SS; sy++) {
           for (let sx = 0; sx < SS; sx++) {
-            const x = ((pxi + (sx + 0.5) / SS) / size) * 128;
-            const y = ((py + (sy + 0.5) / SS) / size) * 128;
+            const x = ((pxi + (sx + 0.5) / SS - pad) / art) * 128;
+            const y = ((py + (sy + 0.5) / SS - pad) / art) * 128;
             if (shape(x, y)) hits++;
           }
         }
@@ -110,8 +114,8 @@ function encodePng(size, rgba) {
 
 const outDir = join(dirname(fileURLToPath(import.meta.url)), "..", "icons");
 mkdirSync(outDir, { recursive: true });
-for (const size of SIZES) {
+for (const [size, pad] of Object.entries(SIZES).map(([s, p]) => [Number(s), p])) {
   const file = join(outDir, `icon-${size}.png`);
-  writeFileSync(file, render(size));
+  writeFileSync(file, render(size, pad));
   console.log(file);
 }
