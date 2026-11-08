@@ -186,7 +186,14 @@ async function setColor(tabId, color) {
 
 // Right-click menu on any web page. Extensions can't add items to the tab
 // strip's own menu, so this lives on the page's menu instead.
+// After an install, update or reload (and at browser startup), re-match saved
+// names right away instead of waiting for some later tab event.
+chrome.runtime.onStartup.addListener(() => {
+  load().catch(() => {});
+});
+
 chrome.runtime.onInstalled.addListener(async () => {
+  load().catch(() => {});
   await chrome.contextMenus.removeAll();
   const contexts = ["page", "frame", "selection", "link", "image"];
   chrome.contextMenus.create({ id: "rename-tab", title: "Rename tab…", contexts });
